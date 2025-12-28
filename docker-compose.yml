@@ -1,14 +1,22 @@
 services:
   java-dev:
-    image: gradle:8.10-jdk21
+    image: gradle:8.10.2-jdk21
     container_name: java-dev
     working_dir: /workspace
     volumes:
       - ./:/workspace
       - gradle-cache:/home/gradle/.gradle
-    command: bash -lc "gradle -v && bash"
-    tty: true
-    stdin_open: true
+    command: ["bash", "-lc", "sleep infinity"]
+    restart: unless-stopped
+    networks:
+      - mediaserver_suite
+      - mediaserver_data
 
 volumes:
   gradle-cache:
+
+networks:
+  mediaserver_suite:
+    external: true
+  mediaserver_data:
+    external: true
